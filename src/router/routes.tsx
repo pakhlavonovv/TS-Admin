@@ -1,6 +1,11 @@
-const admin:any = [
+interface AdminType {
+    content: string,
+    path: string
+}
+
+const admin:AdminType[] =  [
     {
-        content: "Category",
+        content: "Categories",
         path: "/admin/categories",
     }
 ]

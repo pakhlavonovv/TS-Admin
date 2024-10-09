@@ -1,6 +1,11 @@
+import { Button } from "antd"
+
 const Index = () => {
+
   return (
-    <div>Category</div>
+    <>
+      <Button type="primary">Add category</Button>
+    </>
   )
 }
 

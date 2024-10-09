@@ -8,7 +8,7 @@ import {
  import {
     SignIn,
     SignUp,
-    Category
+    Category,
  } from "@pages";
  import AdminLayout from '../layout/admin-layout'
  
