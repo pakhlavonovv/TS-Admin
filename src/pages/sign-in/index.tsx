@@ -23,7 +23,7 @@ const Index = () => {
         const access_token = resp.data?.data?.tokens?.access_token;
         if (access_token) {
           localStorage.setItem("access_token", access_token);
-          navigate('/admin');
+          navigate('/admin/categories');
         }
       }
     } catch (error) {

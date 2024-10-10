@@ -1,4 +1,5 @@
 import SignIn from './sign-in'
 import SignUp from './sign-up'
 import Category from './category'
-export { SignIn, SignUp, Category }
+import Brand from './brand'
+export { SignIn, SignUp, Category, Brand }

@@ -28,7 +28,7 @@ export default function SignUpPage() {
         const access_token = response.data?.data?.tokens?.access_token;
         if (access_token) {
           localStorage.setItem("access_token", access_token);
-          navigate("/admin");
+          navigate("/admin/categories");
           console.log(access_token);
         }
       } else {

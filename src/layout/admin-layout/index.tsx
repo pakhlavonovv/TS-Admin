@@ -5,7 +5,7 @@ import {
 } from '@ant-design/icons';
 import { Button, Layout, Menu, Tooltip, theme } from 'antd';
 import { LogoutOutlined } from '@ant-design/icons';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Outlet } from 'react-router-dom';
 import { admin } from '../../router/routes';
 
 const { Header, Sider, Content } = Layout;
@@ -27,7 +27,7 @@ const App = () => {
     <Layout className='h-[100vh]'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className="demo-logo-vertical" />
-        <h1 className='text-[#ffc04a] text-[30px] font-bold text-center mt-2 mb-2'>TechnoArk</h1>
+        <h1 className='text-[#ffc934] text-[30px] font-bold text-center mt-2 mb-2'>TechnoArk</h1>
         <Menu
           theme="dark"
           mode="inline"
@@ -72,7 +72,7 @@ const App = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          Content
+          <Outlet/>
         </Content>
       </Layout>
     </Layout>

@@ -2,7 +2,7 @@ import { Button, Input, Modal, Space, message } from "antd";
 import { useEffect, useState } from "react";
 import { EditingCategory, CategoryValues } from "../../components/types";
 import GlobalTable from "../../components/global-table";
-import category from "../../service/categories";
+import brand from "../../service/brand";
 import { Form } from "antd";
 
 const Index = () => {
@@ -19,7 +19,7 @@ const Index = () => {
 
   const getData = async () => {
     try {
-      const res = await category.get(params);
+      const res = await brand.get(params);
       setData(res?.data?.data?.categories);
       setTotal(res?.data?.data?.total || 0); 
     } catch (error) {
@@ -32,11 +32,20 @@ const Index = () => {
   }, [params]);
 
   const addOrUpdateCategory = async (values: CategoryValues): Promise<void> => {
+    let form = new FormData();
+    console.log(values);
+
+    if (file) {
+        form.append("file", file);
+    }
+    form.append("name", values.name);
+    form.append("category_id", values.category_id);
+    form.append("description", values.description);
     try {
       if (editingCategory) {
-        await category.update(editingCategory.id, values);
+        await brand.update(editingCategory.id, values);
       } else {
-        await category.create(values);
+        await brand.create(values);
       }
       getData();
       setVisible(false);
@@ -55,7 +64,7 @@ const Index = () => {
 
   const deleteCategory = async (id: number) => {
     try {
-      await category.delete(id);
+      await brand.delete(id);
       message.success("Category successfully deleted!");
       getData();
     } catch (error) {
@@ -116,6 +125,7 @@ const Index = () => {
       ),
     },
   ];
+  
 
   return (
     <>
