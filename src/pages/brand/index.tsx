@@ -38,26 +38,37 @@ const Index = () => {
 
   // Function to handle adding or updating a category
   const addOrUpdateCategory = async (values: CategoryValues): Promise<void> => {
-    const formData = new FormData(); // Create FormData to append file and other data
+    const formData = new FormData();
     formData.append("name", values.name);
     if (file) {
-      formData.append("file", file);
+        formData.append("file", file);
     }
+    
     try {
-      if (editingCategory) {
-        await brand.update(editingCategory.id, formData); // Update if editing
-      } else {
-        await brand.create(formData); // Create if adding
-      }
-      getData();
-      setVisible(false);
-      form.resetFields(); // Reset form after submission
-      setFile(null); // Clear file state
+        const token = localStorage.getItem("token"); // Tokenni localStorage yoki contextdan oling
+
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token}`, // Tokenni headerda jo'nating
+                "Content-Type": "multipart/form-data"
+            }
+        };
+
+        if (editingCategory) {
+            await brand.update(editingCategory.id, formData, config); // Update so'rov
+        } else {
+            await brand.create(formData, config); // Create so'rov
+        }
+        getData();
+        setVisible(false);
+        form.resetFields();
+        setFile(null);
     } catch (error) {
-      console.error("Error while adding/updating category:", error);
-      message.error("Failed to save brand. Try again.");
+        console.error("Error while adding/updating category:", error);
+        message.error("Failed to save brand. Try again.");
     }
-  };
+};
+
 
   // Edit category handler
   const editCategory = (category: EditingCategory): void => {
