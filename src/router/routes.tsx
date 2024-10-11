@@ -11,6 +11,10 @@ const admin:AdminType[] =  [
     {
         content: "Brand",
         path: "/admin/brand",
+    },
+    {
+        content: "Settings",
+        path: "/admin/settings",
     }
 ]
 export { admin }

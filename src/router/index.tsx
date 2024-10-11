@@ -10,7 +10,8 @@ import {
    SignIn,
    SignUp,
    Category,
-   Brand
+   Brand,
+   Settings
 } from "@pages";
 import AdminLayout from '../layout/admin-layout'
 
@@ -25,6 +26,7 @@ const Index = () => {
             <Route path="admin" element={<AdminLayout />}>
                <Route path="categories" element={<Category />} />
                <Route path="brand" element={<Brand />} />
+               <Route path="settings" element={<Settings />} />
             </Route>
          </Route>
       )
