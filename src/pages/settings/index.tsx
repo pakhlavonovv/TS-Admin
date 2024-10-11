@@ -18,7 +18,7 @@ const Index = () => {
         window.localStorage.removeItem("email");
     }
 
-    const handleUpdate = (values) => {
+    const handleUpdate = (values:any) => {
         window.localStorage.setItem("first_name", values.first_name);
         window.localStorage.setItem("last_name", values.last_name);
         window.localStorage.setItem("phone_number", values.phone_number);
