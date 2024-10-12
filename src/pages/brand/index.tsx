@@ -1,19 +1,19 @@
 import { Button, Input, Modal, Space, message, Upload } from "antd";
 import { useEffect, useState } from "react";
-import { EditingCategory, CategoryValues } from "../../components/types"; // Types
-import GlobalTable from "../../components/global-table"; // GlobalTable component
-import brand from "../../service/brand"; // brand service
+import { EditingCategory, CategoryValues } from "../../components/types"; 
+import GlobalTable from "../../components/global-table"; 
+import brand from "../../service/brand"; 
 import { Form } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import { ColumnsType, TablePaginationConfig } from "antd/es/table"; // Type imports for table
+import { ColumnsType, TablePaginationConfig } from "antd/es/table"; 
 
 const Index = () => {
-  const [data, setData] = useState<CategoryValues[]>([]); // Specify the type of the data array
-  const [total, setTotal] = useState<number>(0); // total number of categories
-  const [visible, setVisible] = useState<boolean>(false); // Modal visibility
+  const [data, setData] = useState<CategoryValues[]>([]); 
+  const [total, setTotal] = useState<number>(0);
+  const [visible, setVisible] = useState<boolean>(false); 
   const [form] = Form.useForm();
-  const [file, setFile] = useState<File | null>(null); // File state
-  const [editingCategory, setEditingCategory] = useState<EditingCategory | null>(null); // For editing
+  const [file, setFile] = useState<File | null>(null); 
+  const [editingCategory, setEditingCategory] = useState<EditingCategory | null>(null); 
   const [params, setParams] = useState({
     search: "",
     limit: 2,
@@ -24,64 +24,64 @@ const Index = () => {
   const getData = async (): Promise<void> => {
     try {
       const res = await brand.get(params);
-      setData(res?.data?.data?.categories || []); // Fallback if data is undefined
+      setData(res?.data?.data?.categories || []); 
       setTotal(res?.data?.data?.total || 0);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-  // useEffect to trigger data fetch on param changes
   useEffect(() => {
     getData();
   }, [params]);
 
-  // Function to handle adding or updating a category
   const addOrUpdateCategory = async (values: CategoryValues): Promise<void> => {
     const formData = new FormData();
     formData.append("name", values.name);
+    formData.append("description", values.description);  
+    formData.append("category_id", values.category_id.toString());  
+  
     if (file) {
-        formData.append("file", file);
+      formData.append("file", file);  
     }
-    
+  
     try {
-        const token = localStorage.getItem("token"); // Tokenni localStorage yoki contextdan oling
-
-        const config = {
-            headers: {
-                "Authorization": `Bearer ${token}`, // Tokenni headerda jo'nating
-                "Content-Type": "multipart/form-data"
-            }
-        };
-
-        if (editingCategory) {
-            await brand.update(editingCategory.id, formData, config); // Update so'rov
-        } else {
-            await brand.create(formData, config); // Create so'rov
-        }
-        getData();
-        setVisible(false);
-        form.resetFields();
-        setFile(null);
+      const token = localStorage.getItem("token");  
+      const config = {
+        headers: {
+          "Authorization": `Bearer ${token}`,  
+          "Content-Type": "multipart/form-data",  
+        },
+      };
+  
+      if (editingCategory) {
+        await brand.update(editingCategory.id, formData, config);
+      } else {
+        await brand.create(formData, config);
+      }
+  
+      getData();  
+      setVisible(false); 
+      form.resetFields(); 
+      setFile(null);  
     } catch (error) {
-        console.error("Error while adding/updating category:", error);
-        message.error("Failed to save brand. Try again.");
+      console.error("Error while adding/updating category:", error);
+      message.error("Failed to save brand. Try again.");
     }
-};
+  };
+  
 
 
-  // Edit category handler
   const editCategory = (category: EditingCategory): void => {
     setEditingCategory(category);
     form.setFieldsValue({
       name: category.name,
       category_id: category.category_id,
       description: category.description,
-    }); // Populate form with brand details
+    }); 
     setVisible(true);
   };
 
-  // Delete category handler
   const deleteCategory = async (id: number): Promise<void> => {
     try {
       await brand.delete(id);
@@ -93,12 +93,10 @@ const Index = () => {
     }
   };
 
-  // Go to sub-category handler (example)
   const goToSubCategory = (id: number): void => {
     console.log("Navigating to sub-category with ID:", id);
   };
 
-  // Handle table pagination and sorting
   const handleTableChange = (pagination: PaginationConfig): void => {
     setParams((prev) => ({
       ...prev,
@@ -107,30 +105,28 @@ const Index = () => {
     }));
   };
 
-  // Handle search input change
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>): void => {
     setParams({
       ...params,
       search: e.target.value,
-      page: 1, // Reset to first page after search
+      page: 1, 
     });
   };
 
-  // Table column definitions with types
   const columns: ColumnsType<CategoryValues> = [
     {
       title: "Brand Name",
-      dataIndex: "name",
+      dataIndex: "name",  
       key: "name",
     },
     {
       title: "Description",
-      dataIndex: "description",
+      dataIndex: "description",  
       key: "description",
     },
     {
       title: "Category ID",
-      dataIndex: "category_id",
+      dataIndex: "category_id",  
       key: "category_id",
     },
     {
@@ -139,23 +135,14 @@ const Index = () => {
       key: "actions",
       render: (_, record: CategoryValues) => (
         <Space>
-          <Button
-            style={{ backgroundColor: "#BC8E5B", color: "white" }}
-            onClick={() => {
-              editCategory(record);
-              setEditingCategory(null); // Clear after edit
-            }}
-          >
-            Edit
-          </Button>
-          <Button className="bg-red-500 text-white" onClick={() => deleteCategory(record.id)}>
-            Delete
-          </Button>
+          <Button onClick={() => editCategory(record)}>Edit</Button>
+          <Button onClick={() => deleteCategory(record.id)}>Delete</Button>
           <Button onClick={() => goToSubCategory(record.id)}>Next</Button>
         </Space>
       ),
     },
   ];
+
 
   return (
     <>
@@ -172,7 +159,7 @@ const Index = () => {
 
       <GlobalTable
         columns={columns}
-        data={data}
+        data={data} 
         pagination={{
           current: params.page,
           pageSize: params.limit,
@@ -182,6 +169,7 @@ const Index = () => {
         }}
         handleChange={handleTableChange}
       />
+
 
       <Modal
         title={editingCategory ? "Edit Brand" : "Add Brand"} // Conditional title
