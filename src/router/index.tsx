@@ -11,7 +11,8 @@ import {
    SignUp,
    Category,
    Brand,
-   Settings
+   Settings,
+   SubCategory
 } from "@pages";
 import AdminLayout from '../layout/admin-layout'
 
@@ -27,6 +28,7 @@ const Index = () => {
                <Route path="categories" element={<Category />} />
                <Route path="brand" element={<Brand />} />
                <Route path="settings" element={<Settings />} />
+               <Route path="sub-categories/:categoryId" element={<SubCategory/>}/>
             </Route>
          </Route>
       )

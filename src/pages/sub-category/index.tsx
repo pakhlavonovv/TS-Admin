@@ -23,17 +23,16 @@ const SubCategory = () => {
     const getData = async () => {
         setLoading(true);
         try {
-            const res = await subCategoryService.get(categoryId, params);
-            console.log(res)
-            setData(res?.data?.data?.subcategories);
-            console.log(res?.data?.data?.subcategories)
-            setTotal(res?.data?.data?.count);
+          const res = await subCategoryService.get(categoryId, params); 
+          setData(res?.data?.data?.subcategories);
+          setTotal(res?.data?.data?.count);
         } catch (error) {
-            console.log(error);
+          console.log(error);
         } finally {
-            setLoading(false);
+          setLoading(false);
         }
-    };
+      };
+      
 
     const addOrUpdateSubCategory = async (values:any) => {
         try {
@@ -120,6 +119,7 @@ const SubCategory = () => {
                 <Space>
                     <Button style={{ backgroundColor: "#BC8E5B", color: "white" }} onClick={() => editSubCategory(record)}><EditOutlined /></Button>
                     {/* <GlobalDelete id={record.id} handleDelete={deleteSubCategory} /> */}
+                    <Button className="bg-red-500 text-white" id={record.id} onClick={()=> deleteSubCategory(record.id)}>Delete</Button>
                 </Space>
             ),
         }

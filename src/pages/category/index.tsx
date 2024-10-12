@@ -4,8 +4,10 @@ import { EditingCategory, CategoryValues } from "../../components/types";
 import GlobalTable from "../../components/global-table";
 import category from "../../service/categories";
 import { Form } from "antd";
+import { useNavigate } from "react-router-dom";
 
 const Index = () => {
+  const navigate = useNavigate()
   const [data, setData] = useState([]);
   const [total, setTotal] = useState(0);
   const [visible, setVisible] = useState(false);
@@ -64,7 +66,7 @@ const Index = () => {
   };
 
   const goToSubCategory = (id: any) => {
-    console.log(id);
+    navigate(`/admin/sub-categories/${id}`);  
   };
 
   const handleTableChange = (pagination: any) => {
