@@ -24,7 +24,8 @@ const Index = () => {
   const getData = async (): Promise<void> => {
     try {
       const res = await brand.get(params);
-      setData(res?.data?.data?.categories || []); 
+      console.log(res)
+      setData(res?.data?.data?.brands    || []); 
       setTotal(res?.data?.data?.total || 0);
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -46,20 +47,11 @@ const Index = () => {
     }
   
     try {
-      const token = localStorage.getItem("token");  
-      const config = {
-        headers: {
-          "Authorization": `Bearer ${token}`,  
-          "Content-Type": "multipart/form-data",  
-        },
-      };
-  
       if (editingCategory) {
-        await brand.update(editingCategory.id, formData, config);
+        await brand.update(editingCategory.id, formData);
       } else {
-        await brand.create(formData, config);
+        await brand.create(params);
       }
-  
       getData();  
       setVisible(false); 
       form.resetFields(); 
