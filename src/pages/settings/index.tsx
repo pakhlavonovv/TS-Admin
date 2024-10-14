@@ -51,11 +51,11 @@ const Index = () => {
                     </div>
                     <div className='flex flex-col gap-2'>
                         <h3>Phone number</h3>
-                        <h1 className='text-[28px]'><b>{phoneNumber || 'Not found'}</b></h1>
+                        <h1 className='text-[28px]'><b>{phoneNumber || '+998(Not found)'}</b></h1>
                     </div>
                     <div className='flex flex-col gap-2'>
                         <h3>Email address</h3>
-                        <h1 className='text-[28px]'><b>{email || 'Not found'}</b></h1>
+                        <h1 className='text-[28px]'><b>{email || 'Not@found'}</b></h1>
                     </div>
                 </div>
                 <div className='mt-4 flex gap-3'>
