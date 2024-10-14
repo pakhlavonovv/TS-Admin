@@ -127,9 +127,8 @@ const Index = () => {
       key: "actions",
       render: (_, record: CategoryValues) => (
         <Space>
-          <Button onClick={() => editCategory(record)}>Edit</Button>
-          <Button onClick={() => deleteCategory(record.id)}>Delete</Button>
-          <Button onClick={() => goToSubCategory(record.id)}>Next</Button>
+          <Button className="bg-[#BC8E5B] text-white" onClick={() => editCategory(record)}>Edit</Button>
+          <Button className="bg-red-500 text-white" onClick={() => deleteCategory(record.id)}>Delete</Button>
         </Space>
       ),
     },
